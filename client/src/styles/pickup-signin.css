@@ -1,0 +1,79 @@
+.pick-sign-wrapper {
+    background-color: peachpuff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 400px;
+    width: 350px;
+    margin-top: 10%;
+    border-radius: 20px;
+    font-size: 18px;
+}
+
+.pick-sign-login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    height: 160px;
+    width: 82%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.pick-sign-input-field {
+    padding: 5px 5px 5px 5px;
+    font-size: 18px;
+}
+
+.note {
+    text-align: left;
+    width: 70%;
+}
+
+.pick-sign-in-button {
+    background-color: #4eef4e;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 18px;
+}
+
+.pick-sign-in-button:hover {
+    background-color: #4eef4ebf;
+    transform: scale(1.2);
+}
+
+.pick-sign-in-button:active {
+    background-color: #4eef4e96;
+}
+
+@media (max-width: 189.99px) {
+    .pick-sign-wrapper {
+        height: 450px;
+        width: 100px;
+    }
+}
+
+@media (min-width: 190px) and (max-width: 239.99px) {
+    .pick-sign-wrapper {
+        height: 450px;
+        width: 160px;
+    }
+}
+
+@media (min-width: 240px) and (max-width: 289.99px) {
+    .pick-sign-wrapper {
+        width: 220px;
+    }
+}
+
+@media (min-width: 290px) and (max-width: 390px) {
+    .pick-sign-wrapper {
+        width: 260px;
+    }
+}

@@ -1,0 +1,121 @@
+.recycle-page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 230px;
+    background-color: #161B22;
+}
+
+.header-recycle {
+    margin-bottom: 100px;
+    font-size: 40px;
+    color: #39ff39;
+    margin-top: 70px;
+}
+
+.roadmap {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 10%;
+    row-gap: 10%;
+    width: 90%;
+}
+
+.step {
+    background-color: yellowgreen;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-around;
+    height: 200px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.step:hover {
+    transform: scale(1.4);
+}
+
+.step-num {
+    background-color: antiquewhite;
+    padding: 40px 30px 40px 30px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.step-text {
+    width: auto;
+    text-align: center;
+    color: white;
+}
+
+.book-slot {
+    margin-top: 100px;
+    margin-bottom: 50px;
+}
+
+.book-slot-button {
+    padding: 15px 20px 15px 20px;
+    border: none;
+    background-color: #39ff39;
+    color: white;
+    border-radius: 22px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.book-slot-button:hover {
+    transform: scale(1.2);
+    font-size: 16px;
+}
+
+.explore-more {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: #39ff39;
+}
+
+.explore-more-text {
+    font-size: 22px;
+}
+
+.explore-arrow {
+    font-size: 25px;
+    animation-name: arrowMovement;
+    animation-duration: 0.75s;
+    animation-iteration-count: infinite;
+    animation-delay: 1s;
+    animation-timing-function: linear;   
+    position: relative;
+}
+
+@keyframes arrowMovement {
+    from {
+        top: 0;
+    }
+
+    to {
+        top: 4px;
+    }
+}
+
+.recycle-text-container {
+    background-color: #A8DF8E;
+    font-size: 50px;
+    margin-top: 150px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 70px;
+    padding-top: 120px;
+    padding-bottom: 120px;
+}
+
+.recycle-text {
+    width: 80%;
+}

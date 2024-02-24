@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+.signin-wrapper {
+    background: url("../images/main-white-bg.jpg");
+    height: 100vh;
+    width: 100vw;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.login-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    height: 490px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    background-color: #F5F5F5;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 68px;
+    border-radius: 20px;
+    border: 1px solid rgba(68, 66, 66, 0.312);
+}
+
+.top span {
+    color: #514c4c;
+    font-size: small;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.top span a {
+    font-weight: 500;
+    color: #514c4c;
+    margin-left: 5px;
+}
+
+.login-header {
+    color: #4fba56;
+    font-size: 35px;
+    text-align: center;
+    padding: 10px 0 30px 0;
+}
+
+.input-field {
+    font-size: 15px;
+    background: #ffffff;
+    color: black;
+    height: 50px;
+    width: 100%;
+    padding: 0 10px 0 45px;
+    border: 1px solid rgba(227, 213, 213, 0.8);
+    box-shadow: 2px 2px 4px rgba(159, 155, 155, 0.579);
+    border-radius: 10px;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+.input-field:hover, .input-field:focus {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+::-webkit-input-placeholder {
+    color: #514c4c;
+}
+
+.input-box i {
+    position: relative;
+    top: -35px;
+    left: 17px;
+    color: #514c4c;
+}
+
+.submit {
+    font-size: 15px;
+    font-weight: 500;
+    color: black;
+    height: 45px;
+    width: 45%;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    background-color: #4fba56;
+    box-shadow: 2px 2px 4px rgba(159, 155, 155, 0.579);
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out,
+                box-shawdow 0.15s ease-in-out;
+}
+
+#sign-in-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+.submit:hover {
+    background-color: #4fba56bc;
+    box-shadow: 1px 5px 7px 1px rgba(0, 0, 0, 0.2);
+}
+
+.submit:active {
+    background-color: #4fba567e;
+}
+
+.si-two-col {
+    display: flex;
+    justify-content: space-between;
+    color: #514c4c;
+    font-size: small;
+    margin-top: -10px;
+}
+
+.si-two-col .one {
+    display: flex;
+    gap: 5px;
+    margin-left: 5px;
+}
+
+.two label a {
+    text-decoration: none;
+    color: #514c4c;
+}
+
+.two label a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 520px) {
+    .login-container {
+        width: 460px;
+    }
+}

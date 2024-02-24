@@ -1,0 +1,110 @@
+.whole-body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+.pickup-wrapper {
+    background-color: peachpuff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 480px;
+    width: 520px;
+    margin-top: 7%;
+    border-radius: 20px;
+    font-size: 18px;
+}
+
+.pick-login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: space-evenly;
+    height: 70%;
+    width: 85%;
+    padding-left: 3%;
+    gap: 10%;
+}
+
+.form-element {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1%;
+}
+
+label {
+    max-width: 150px;
+    width: auto;
+}
+
+.pickup-input-field {
+    padding: 5px 5px 5px 5px;
+    font-size: 18px;
+    width: 60%;
+}
+
+.note {
+    text-align: left;
+    width: 70%;
+}
+
+.pick-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pick-confirm-button {
+    align-self: center;
+    background-color: #4eef4e;
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 18px;
+}
+
+.pick-confirm-button:hover {
+    background-color: #4eef4ebf;
+    transform: scale(1.2);
+}
+
+.pick-confirm-button:active {
+    background-color: #4eef4e96;
+}
+
+@media (max-width: 269.99px) {
+    .pickup-wrapper {
+        width: 180px;
+    }
+}
+
+@media (min-width: 270px) and (max-width: 329.99px) {
+    .pickup-wrapper {
+        width: 250px;
+    }
+}
+
+@media (min-width: 330px) and (max-width: 399.99px) {
+    .pickup-wrapper {
+        width: 300px;
+    }
+}
+
+@media (min-width: 400px) and (max-width: 479.99px) {
+    .pickup-wrapper {
+        width: 370px;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 560px) {
+    .pickup-wrapper {
+        width: 450px;
+    }
+}

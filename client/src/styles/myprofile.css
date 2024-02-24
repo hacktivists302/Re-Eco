@@ -1,0 +1,119 @@
+.profile-two-forms {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile-two-forms .profile-input-box {
+    width: 48%;
+}
+
+.MyProfile-form {
+    height: 100vh;
+    width: calc(100vw - 230px);
+    margin-left: 230px;
+    background-color: #161B22;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.MyProfile-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.MyProfile-container .top {
+    margin-bottom: 50px;
+}
+
+.MyProfile-header {
+    color: #4fba56;
+    font: "Poppins";
+    font-size: 3rem;
+    text-align: center;
+}
+
+.profile-input-field {
+    font-size: 1rem;
+    background: #ffffff;
+    color: black;
+    height: 50px;
+    width: 100%;
+    padding: 0 10px 0 40px;
+    border: 1px solid rgba(227, 213, 213, 0.8);
+    box-shadow: 2px 2px 4px rgba(159, 155, 155, 0.579);
+    border-radius: 10px;
+    outline: none;
+}
+
+.profile-input-field,
+.Input-field {
+    margin-bottom: 20px;
+}
+
+.profile-input-field:hover, .profile-input-field:focus, .Input-field:hover, .Input-field:focus {
+    background: rgba(57, 35, 35, 0.25);
+}
+
+.profile-input-field::placeholder,
+.Input-field::placeholder {
+    color: #cf2828;
+}
+
+.profile-input-box i {
+    position: relative;
+    top: 33px;
+    left: 17px;
+    color: #891010;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+} 
+
+.Input-field{
+    font-size: 1rem;
+    background: #ffffff;
+    color: black;
+    height: 50px;
+    width: 100%;
+    padding: 0 10px 0 40px;
+    border: 1px solid rgba(227, 213, 213, 0.8);
+    box-shadow: 2px 2px 4px rgba(159, 155, 155, 0.579);
+    border-radius: 10px;
+    outline: none;
+}
+
+.profile-input-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.EditButton{
+    color: #c01d1d;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 10px 20px;
+}
+
+.EditButton:hover{
+    color: #0f5d15;
+    transition: ease-in;
+}
+
+@media (max-width: 1000px) {
+    .MyProfile-form {
+        width: 100vw;
+        margin-left: 0;
+    }
+
+    .profile-two-forms {
+        flex-direction: column;
+    }
+
+    .profile-two-forms .profile-input-box {
+        width: 100%;
+    }
+}
