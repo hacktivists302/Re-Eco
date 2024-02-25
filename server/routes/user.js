@@ -36,26 +36,6 @@ function uniqueToken(extoken){
 return token;
 }
 
-  
-
-//---Testing route--//
-router.get("/nothing",async(req,res)=>{
-  let token = generateSixDigitToken();
-  const {email}=req.body.email;
-  const exsistingSlot=await userSlot.findOne({email:email})
-  do{
-    
-      if(exsistingSlot){
-        if(exsistingSlot.token==token){
-          generateSixDigitToken();
-         }else{
-           return newToken
-         }
-      }
-  }while(true)
-
-})
-
 //---------Token logic----------//
 
 function generateOTP() {
@@ -286,6 +266,7 @@ router.post("/slotbooking", async (req, res, next) => {
   const { email, address, pin, contact, date } = req.body;
 
   const exsistingSlot=await userSlot.findOne({email:email})
+  const newToken= uniqueToken(exsistingSlot.token)
 
 
   try {
@@ -296,7 +277,7 @@ router.post("/slotbooking", async (req, res, next) => {
       pin: pin,
       number: contact,
       date: date,
-      token:  uniqueToken(exsistingSlot.token),
+      token:  newToken,
       otp: mygeneratedOTP,
     });
 
@@ -314,7 +295,7 @@ router.post("/slotbooking", async (req, res, next) => {
     const token22 = await userSlot.findOne({ _id: fulluser.userSlot });
 
     const notification = await usernotification.create({
-      notificationMessage: `Hey ${fulluser.firstname} this is your 6-digit token,Kindly Share this ${uniqueToken(exsistingSlot.token)} with our Delivery Executive`,
+      notificationMessage: `Hey ${fulluser.firstname} this is your 6-digit token,Kindly Share this ${newToken} with our Delivery Executive`,
     });
 
     await user.updateOne(
