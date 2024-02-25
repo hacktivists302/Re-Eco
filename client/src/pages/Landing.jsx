@@ -7,6 +7,7 @@ import Timeline from "../components/Timeline";
 import "../styles/navbar.css";
 import "../styles/landing-page.css";
 import Tier from "../components/Tier";
+import Accept from "../components/Accept";
 
 const Landing = () => {
   return (
@@ -14,6 +15,7 @@ const Landing = () => {
       <Navbar />
       <Intro />
       <Rewards />
+      <Accept />
       <Timeline />
       <Tier />
       <Footer />
