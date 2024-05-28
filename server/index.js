@@ -17,7 +17,6 @@ const JWT_SECRET = process.env.JWT_SECRET;
 const colors = require("colors");
 const { json } = require("express");
 const cookieParser = require("cookie-parser");
-const e = require("express");
 const cors = require("cors");
 const { render } = require("hbs");
 
@@ -71,13 +70,6 @@ async function sendMail(email, link) {
     return error;
   }
 } //email ends here
-
-
-
-
-
-
-
 
 
 // app.get("/resetpass/:id/:token", async (req, res, next) => {

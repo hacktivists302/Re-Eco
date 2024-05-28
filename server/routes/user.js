@@ -66,6 +66,10 @@ const createToken = (id) => {
   });
 };
 
+router.get("/name",async(req,res)=>{
+  res.send("hello")
+})
+
 //User Routes
 router.post("/signup", async (req, res, next) => {
   const { firstname, lastname, email, password } = req.body;
