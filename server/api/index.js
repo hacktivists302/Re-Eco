@@ -2,8 +2,8 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const userRouter=require("./routes/user");
-const pickpartnerRouter=require("./routes/pickpartner");
+const userRouter=require("../routes/user");
+const pickpartnerRouter=require("../routes/pickpartner");
 const hbs = require("hbs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
@@ -27,6 +27,9 @@ app.use(cookieParser());
 app.set("view engine", "hbs");
 app.set("views", templatePath)
 app.use(express.urlencoded({ extended: false }));
+app.get("/",(req,res)=>{
+  res.send("Server is running on vercel")
+})
 app.use("/user",userRouter);
 app.use("/picksignin",pickpartnerRouter);
 
