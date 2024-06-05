@@ -26,10 +26,8 @@ const Signup = () => {
   };
 
   const handleSubmit = async(e) => {
-    console.log("before try catch")
     e.preventDefault();
     
-     console.log("in try catch")
 
       const userData={
         firstname:form.firstname,
@@ -38,16 +36,13 @@ const Signup = () => {
         password:form.password,
         password2:form.password2,
       }
-       console.log("before axios")
 
       axios.post("http://localhost:4000/user/signup",userData,{
         headers: {
           "Content-type": "application/json",
         },
       }).then((res)=>{
-        console.log(res.status,res.data);
         const data =res.data;
-        console.log("in axios")
 
         if (data.status === 400 || !data) {
           window.alert("User Does not Exist");

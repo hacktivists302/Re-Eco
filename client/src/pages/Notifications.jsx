@@ -18,36 +18,18 @@ const UserNotification = (props) => {
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
   //--------sample email--------//
-  const email = "das206053@gmail.com";
-
-  const showMyNotifications = async () => {
-    let API = [`http://localhost:4000/user/notifications/${email}`];
-
-    Promise.all(
-      API.map(async (api) => {
-        const res = await axios.get(api);
-        setNotifications(res.data.notifications);
-        console.log(res.data.notifications);
-
-        // console.log(res.data.notifications);//array of aobject
-      })
-    ).catch((error) => {
-      if (error.response) {
-        // the request was made and the server responded with a status code
-        console.log(error.response);
-        console.log(error.response.status);
-      } else if (error.request) {
-        // the request was made but no response was received
-        console.log("network error");
-      } else {
-        // something happened when setting up the request
-        console.log(error.toJSON());
-      }
-    });
-  };
 
   useEffect(() => {
-    showMyNotifications();
+   
+    axios.get("http://localhost:4000/user/notifications", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((res) => {
+    
+        setNotifications(res.data.notifications);
+      });
   }, []);
 
   return (

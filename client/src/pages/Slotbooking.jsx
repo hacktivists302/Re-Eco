@@ -15,6 +15,11 @@ const Slotbooking = () => {
     contact: "",
     date: "Date Selected",
   });
+  useEffect(()=>{
+    if(!localStorage.getItem("token")){
+      navigate("/signup")
+    }
+  },[])
 
   const handleChange = (e) => {
     const { name, value } = e.target;
