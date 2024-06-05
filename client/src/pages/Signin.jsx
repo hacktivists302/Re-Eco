@@ -6,54 +6,49 @@ import axios from "axios";
 
 const Signin = () => {
   const navigate = useNavigate();
+  
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-const handleChange = (e) => {
-const value=e.target.value;
+
+  const handleChange = (e) => {
+    const value = e.target.value;
     setForm({
-        ...form,
-        [e.target.name]: value,
+      ...form,
+      [e.target.name]: value,
     });
   };
 
   const handleSubmit = async (e) => {
-    // console.log("before try catch")
     e.preventDefault();
 
-    // console.log("IN try catch")
+    const userData = {
+      email: form.email,
+      password: form.password,
+    };
 
-      const userData={
-        email:form.email,
-        password:form.password
-      }
-    console.log("BEFORE AXIOS")
-
-      axios.post("http://localhost:4000/user/signin",userData,{
+    await axios
+      .post("http://localhost:4000/user/signin", userData, {
         headers: {
           "Content-type": "application/json",
         },
-        
-      }).then((res)=>{
-        console.log("new");
-        console.log(res.status,res.data);
-        const data =res;
-        console.log(typeof data);
-        // console.log("in axios")
+      })
+      .then((res) => {
+        const token = res.data.token;
 
-        if ( !data) {
+        if (!token) {
           window.alert("User Does not Exist");
         } else {
+          localStorage.setItem("token",token)
           navigate("/user/slotbooking");
         }
       })
-    .catch((err) => {
-      window.alert("User Does not Exist");
-      // console.log("new2");
-      console.error(err);
-    });
+      .catch((err) => {
+        window.alert("User Does not Exist");
+        console.error(err);
+      });
   };
 
   return (

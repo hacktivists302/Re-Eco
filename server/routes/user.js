@@ -196,11 +196,9 @@ router.get("/rewards/:email", auth, async (req, res, next) => {
 //slot booking
 router.post("/slotbooking", auth, async (req, res, next) => {
   const { email, address, pin, contact, date } = req.body;
-  // console.log(email)
   const exsistingUsers = await userSlot.find({});
   const tokenArray=exsistingUsers.map((user)=>user.token);
   const newToken = uniqueToken(tokenArray.map((token)=>token));
-  // const newToken=generateSixDigitToken();
 
   try {
     const slot = await userSlot.create({
@@ -249,12 +247,13 @@ router.post("/slotbooking", auth, async (req, res, next) => {
   }
 });
 
-router.get("/notifications/:email", auth, async (req, res, next) => {
+router.get("/notifications", auth, async (req, res, next) => {
   try {
-    const userEmail = req.params.email;
-    console.log(userEmail);
+    const userId=req.userId;
+
     //finduser
-    const exsistingUser = await user.findOne({ email: userEmail });
+    const exsistingUser = await user.findOne({ _id: userId });
+   
     if (!exsistingUser) {
       res.json({
         msg: "no notifications",
@@ -272,7 +271,7 @@ router.get("/notifications/:email", auth, async (req, res, next) => {
     });
 
     const notifications = await Promise.all(notificationPromises);
-    //  console.log(rew)
+    
 
     res.json({
       notifications: notifications,
