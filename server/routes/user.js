@@ -12,28 +12,26 @@ const {
   userReward,
   usernotification,
 } = require("../db/mongodb");
-const { ObjectId } = require("mongodb");
 //---------Unique Token logic----------//
-function generateSixDigitToken(){
-  let token="";
-  for(let i=0;i<6;i++){
-    token=token+Math.floor(10*(Math.random()));
+function generateSixDigitToken() {
+  let token = "";
+  for (let i = 0; i < 6; i++) {
+    token = token + Math.floor(10 * Math.random());
   }
-  return token; 
+  return token;
 }
 
-function uniqueToken(extoken){
+function uniqueToken(extoken) {
   let token;
-  do{
-  token=generateSixDigitToken()
-  if(extoken==token){
-    continue;
-  }else{
-    break;
-  }
-
-}while(true)
-return token;
+  do {
+    token = generateSixDigitToken();
+    if (extoken == token) {
+      continue;
+    } else {
+      break;
+    }
+  } while (true);
+  return token;
 }
 
 //---------Token logic----------//
@@ -59,18 +57,6 @@ const handleErrors = (err) => {
   let errors = { email: "", password: "" };
 };
 
-const maxAge = 3 * 24 * 60 * 60;
-const createToken = (id) => {
-  return jwt.sign({ id }, JWT_SECRET, {
-    expiresIn: maxAge,
-  });
-};
-
-router.get("/name",async(req,res)=>{
-  res.send("hello")
-})
-
-//User Routes
 router.post("/signup", async (req, res, next) => {
   const { firstname, lastname, email, password } = req.body;
   try {
@@ -81,13 +67,16 @@ router.post("/signup", async (req, res, next) => {
       return res.json({ message: "User already exsist" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    await user.create({
+    const newUser = await user.create({
       firstname: firstname,
       lastname: lastname,
       email: email,
       password: hashedPassword,
     });
-    res.status(200).json({ message: "New user created" });
+    const userId = newUser._id;
+    const token = jwt.sign({ userId }, JWT_SECRET);
+
+    res.status(200).json({ message: "New user created", token: token });
   } catch (error) {
     console.error("An error occurred:", error);
     next(error);
@@ -100,112 +89,81 @@ router.post("/signin", async (req, res, next) => {
     // console.log(email)
     const exsistingUser = await user.findOne({ email: email });
     if (!exsistingUser) {
-      return res.status(404).json({ msg: "User not found1" });
+      return res.status(404).json({ msg: "User not found" });
     }
     const matchPassword = await bcrypt.compare(
       password,
       exsistingUser.password
     );
+    
     if (!matchPassword) {
       return res.status(400).json({ msg: "Invalid credentials" });
     }
+    const userId=exsistingUser._id;
+    const token=jwt.sign({userId},JWT_SECRET);
 
-    res.json({
+    res.status(200).json({
       message: "Hello user",
+      token:token
     });
 
-    // const Atoken = createToken(exsistingUser._id);
-    // console.log(exsistingUser._id);
-    // res.cookie("jwt", Atoken, { httpOnly: true, maxAge: maxAge * 1000 });
-    // console.log(Atoken);
   } catch (error) {
     console.error("An error occurred:", error);
     next(error);
   }
 });
 //get user profile
-router.get("/profile/:email",async(req,res)=>{
-  const exsistingUser=await user.findOne({email:req.params.email})
-  const exsistingSlot=await userSlot.findOne({email:req.params.email})
+router.get("/profile/:email",auth, async (req, res) => {
+  const exsistingUser = await user.findOne({ email: req.params.email });
+  const exsistingSlot = await userSlot.findOne({ email: req.params.email });
 
-  console.log(exsistingUser)
+  console.log(exsistingUser);
   res.json({
-    profileData:{
-      firstname:exsistingUser.firstname,
-      lastname:exsistingUser.lastname,
-      email:exsistingUser.email,
-      pin:exsistingSlot.pin,
-      address:exsistingSlot.address
-    }
-    
-  })
-})
+    profileData: {
+      firstname: exsistingUser.firstname,
+      lastname: exsistingUser.lastname,
+      email: exsistingUser.email,
+      pin: exsistingSlot.pin,
+      address: exsistingSlot.address,
+    },
+  });
+});
 
 //update user profile
-router.put("/profile/:email",async(req,res)=>{
-  try{
-    const exsistingUser=await user.findOne({email:req.params.email})
+router.put("/profile/:email", auth, async (req, res) => {
+  try {
+    const exsistingUser = await user.findOne({ email: req.params.email });
     // console.log(exsistingUser)
-    const exsistingSlot=await userSlot.findOne({email:req.params.email})
+    const exsistingSlot = await userSlot.findOne({ email: req.params.email });
 
-  console.log(exsistingSlot);
-  if(exsistingUser){
-    exsistingUser.firstname=req.body.firstname ||exsistingUser.firstname 
-    exsistingUser.lastname=req.body.lastname ||exsistingUser.lastname 
-    exsistingUser.email=req.body.email ||exsistingUser.email 
-    if(req.body.pin ||req.body.address){
-      exsistingSlot.pin=req.body.pin||exsistingSlot.pin
-      exsistingSlot.address=req.body.address||exsistingSlot.address
+    console.log(exsistingSlot);
+    if (exsistingUser) {
+      exsistingUser.firstname = req.body.firstname || exsistingUser.firstname;
+      exsistingUser.lastname = req.body.lastname || exsistingUser.lastname;
+      exsistingUser.email = req.body.email || exsistingUser.email;
+      if (req.body.pin || req.body.address) {
+        exsistingSlot.pin = req.body.pin || exsistingSlot.pin;
+        exsistingSlot.address = req.body.address || exsistingSlot.address;
+      }
+      const updateSLot = await exsistingSlot.save();
+      const updateProfile = await exsistingUser.save();
+      // console.log(updateProfile)
+      res.json({
+        firstname: updateProfile.firstname,
+        lastname: updateProfile.lastname,
+        email: updateProfile.email,
+        pin: updateSLot.pin,
+        address: updateSLot.address,
+      });
     }
-    const updateSLot=await exsistingSlot.save();
-    const updateProfile=await exsistingUser.save();
-    // console.log(updateProfile)
-    res.json({
-      firstname:updateProfile.firstname,
-      lastname:updateProfile.lastname,
-      email:updateProfile.email,
-      pin:updateSLot.pin,
-      address:updateSLot.address,
-    })
-  }
-  }catch (error) {
+  } catch (error) {
     console.error("An error occurred:", error);
   }
-  
-})
-
-
-router.get("/user/pickdetails", auth, (req, res) => {
-  res.render("pickup-details");
-});
-
-router.get("/user/profile", auth, (req, res) => {
-  res.render("MyProfile");
-});
-router.get("/user/home", auth, (req, res) => {
-  res.render("recycle");
-});
-
-router.get("/user/slotbooking", auth, (req, res) => {
-  res.render("slotbooking");
-});
-
-router.get("/user/logout", (req, res) => {
-  res.clearCookie("jwt");
-  res.redirect("/");
-});
-
-router.get("/forgotpass", (req, res) => {
-  res.render("forgot-password");
-});
-
-router.get("/user/recycle", auth, (req, res) => {
-  res.render("recycle");
 });
 
 //rewards routes
 //--------when authentication we have to change the rewards routes-----//
-router.get("/rewards/:email", async (req, res, next) => {
+router.get("/rewards/:email", auth, async (req, res, next) => {
   try {
     const userEmail = req.params.email;
     console.log(userEmail);
@@ -235,53 +193,23 @@ router.get("/rewards/:email", async (req, res, next) => {
   }
 });
 
-router.post("/forgotpass", async (req, res) => {
-  try {
-    const check = await user.findOne({ email: req.body.email });
-
-    if (check.email === req.body.email) {
-      const secret = JWT_SECRET + check.password;
-      console.log(secret); //testing
-
-      const email = check.email;
-      const payload = {
-        email: check.email,
-        id: check.id,
-      };
-      const token = jwt.sign(payload, secret, { expiresIn: "15m" });
-      const link = `http://localhost:3000/${check.id}/${token}`;
-      console.log(link);
-
-      sendMail(email, link).then((result) =>
-        console.log("Email sent".bgWhite.red, result)
-      );
-
-      res.send("<h1>Password reset link has been sent in your mail</h1>");
-    } else {
-      alert("Wrong email");
-    }
-  } catch (error) {
-    res.send("Wrong details");
-  }
-});
-
 //slot booking
-router.post("/slotbooking", async (req, res, next) => {
+router.post("/slotbooking", auth, async (req, res, next) => {
   const { email, address, pin, contact, date } = req.body;
-
-  const exsistingSlot=await userSlot.findOne({email:email})
-  const newToken= uniqueToken(exsistingSlot.token)
-
+  // console.log(email)
+  const exsistingUsers = await userSlot.find({});
+  const tokenArray=exsistingUsers.map((user)=>user.token);
+  const newToken = uniqueToken(tokenArray.map((token)=>token));
+  // const newToken=generateSixDigitToken();
 
   try {
-
     const slot = await userSlot.create({
       email: email,
       address: address,
       pin: pin,
       number: contact,
       date: date,
-      token:  newToken,
+      token: newToken,
       otp: mygeneratedOTP,
     });
 
@@ -317,11 +245,11 @@ router.post("/slotbooking", async (req, res, next) => {
     });
   } catch (error) {
     console.error("An error occurred:", error);
-    next(error);
+    res.json({msg:"Something is wrong"})
   }
 });
 
-router.get("/notifications/:email", async (req, res, next) => {
+router.get("/notifications/:email", auth, async (req, res, next) => {
   try {
     const userEmail = req.params.email;
     console.log(userEmail);
@@ -352,6 +280,36 @@ router.get("/notifications/:email", async (req, res, next) => {
   } catch (error) {
     console.error("An error occurred:", error);
     next(error);
+  }
+});
+
+router.post("/forgotpass", async (req, res) => {
+  try {
+    const check = await user.findOne({ email: req.body.email });
+
+    if (check.email === req.body.email) {
+      const secret = JWT_SECRET + check.password;
+      console.log(secret); //testing
+
+      const email = check.email;
+      const payload = {
+        email: check.email,
+        id: check.id,
+      };
+      const token = jwt.sign(payload, secret, { expiresIn: "15m" });
+      const link = `http://localhost:3000/${check.id}/${token}`;
+      console.log(link);
+
+      sendMail(email, link).then((result) =>
+        console.log("Email sent".bgWhite.red, result)
+      );
+
+      res.send("<h1>Password reset link has been sent in your mail</h1>");
+    } else {
+      alert("Wrong email");
+    }
+  } catch (error) {
+    res.send("Wrong details");
   }
 });
 
