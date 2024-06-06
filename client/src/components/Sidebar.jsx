@@ -4,12 +4,14 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import logo from "../images/logo/main_logo.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
+
 import {
   faUser,
   faSquareCheck,
+  faSignOutAlt,
   faBell,
   faGift,
-  faGear,
   faX,
   faBars,
 } from "@fortawesome/free-solid-svg-icons";
@@ -29,6 +31,8 @@ const showHideSidebar = () => {
 const Sidebar = () => {
   const [sideLink, setSideLink] = useState(null);
   const location = useLocation();
+  const navigate=useNavigate();
+
 
   let runOnce = false;
   window.addEventListener("resize", () => {
@@ -50,6 +54,9 @@ const Sidebar = () => {
   });
 
   useEffect(() => {
+    if(!localStorage.getItem("token")){
+      navigate("/signup")
+    }
     if (sideLink) {
       sideLink.classList.remove("active-link-part");
     }
@@ -125,12 +132,15 @@ const Sidebar = () => {
             </Link>
           </div>
         </div>
-        <div className="sidebar-link create-area">
+        <button className="sidebar-link create-area" onClick={()=>{
+          localStorage.removeItem("token");
+          navigate("/signup")
+          }}>
           <div className="font-icon">
-            <FontAwesomeIcon icon={faGear} />
+            <FontAwesomeIcon icon={faSignOutAlt} />
           </div>
-          <div>Settings</div>
-        </div>
+          <div>Sign out</div>
+        </button>
       </nav>
       <div
         className="hamburger-icon show-hamburger-icon"

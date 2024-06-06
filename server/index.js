@@ -73,7 +73,6 @@ app.use("/picksignin", pickpartnerRouter);
 //     const payload = jwt.verify(token, secret);
 //     res.render("reset-password", { email: check.email });
 //   } catch (error) {
-//     console.log(error.message);
 //     res.send(error.message);
 //   }
 // });

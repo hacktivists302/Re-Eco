@@ -33,7 +33,7 @@ const Slotbooking = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log("hello from button")
+ 
     e.preventDefault();
     try {
       const slotData={
@@ -43,12 +43,14 @@ const Slotbooking = () => {
         contact:slotForm.contact,
         date:slotForm.date,
       }
-      console.log(slotData.email);
+      const token=localStorage.getItem("token");
 
-      axios.post("http://localhost:4000/user/slotbooking",slotData).then((res)=>{
-        console.log(res.status,res.data);
+      axios.post("http://localhost:4000/user/slotbooking",slotData,{
+        headers:{
+          Authorization:"Bearer "+token
+        }
+      }).then((res)=>{
         const data =res.data;
-        console.log("in axios")
 
         if (data.status === 400 || !data) {
           window.alert("User not Registered");
@@ -197,7 +199,6 @@ const Slotbooking = () => {
         }
         renderCalendar();
         clickEvent();
-        console.log(dateHeader);
       });
     });
   }

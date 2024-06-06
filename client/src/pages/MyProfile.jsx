@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import "../styles/myprofile.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const MyProfile = () => {
+  const navigate=useNavigate();
   const [profileForm, setProfileForm] = useState({
     firstname: "",
     lastname: "",
@@ -11,6 +14,7 @@ const MyProfile = () => {
     address1: "",
     address2: "",
   });
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +26,30 @@ const MyProfile = () => {
       };
     });
   };
+
+  const showMyProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if(!token){
+        navigate("/signin")
+        throw new Error("user does not exsist")
+      }
+     const response=await axios.get("http://localhost:4000/user/profile", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      const profile=response.data.profileData;
+      setProfileForm(profile);
+    } catch (error) {
+      console.error("Error fetching rewards:", error);
+    }
+  };
+
+  useEffect(() => {
+    showMyProfile();
+  },[]);
 
   return (
     <>

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleDot } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const UserNotification = (props) => {
   return (
@@ -17,19 +18,32 @@ const UserNotification = (props) => {
 
 const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
-  //--------sample email--------//
+  const navigate=useNavigate();
+ 
 
   useEffect(() => {
-   
-    axios.get("http://localhost:4000/user/notifications", {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
-      .then((res) => {
-    
-        setNotifications(res.data.notifications);
-      });
+    try {
+      const token=localStorage.getItem("token")
+      if(!token){
+        navigate("/signin")
+       
+        throw new Error("user does not exsist");
+      }
+      
+     
+      axios.get("http://localhost:4000/user/notifications", {
+          headers: {
+            Authorization: "Bearer " +token,
+          },
+        })
+        .then((res) => {
+      
+          setNotifications(res.data.notifications);
+        });
+    } catch (error) {
+     
+    }
+
   }, []);
 
   return (
@@ -40,7 +54,7 @@ const Notifications = () => {
         </div>
         {notifications
           .map((notification) => {
-            console.log(notification);
+           
             return (
               <UserNotification
                 key={notification.notificationNumber}

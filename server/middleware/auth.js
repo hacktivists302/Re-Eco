@@ -9,6 +9,7 @@ const auth = async (req, res, next) => {
     if (!authHeader || !authHeader.startsWith("Bearer")) {
       return res.status(403).json({msg:"user not authenticated/something went wrong"});
     }
+    
     const token = authHeader.split(" ")[1];
     const decodedValue = jwt.verify(token, JWT_SECRET);
     if (decodedValue.userId) {

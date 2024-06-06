@@ -26,13 +26,11 @@ const PickupSignin = () => {
   const PickupData = async (e) => {
     e.preventDefault();
 
-    // console.log("IN try catch")
 
       const userData={
         loginid:form.loginid,
         password:form.password
       }
-    console.log("BEFORE AXIOS")
 
       axios.post("http://localhost:4000/picksignin",userData,{
         headers: {
@@ -40,11 +38,7 @@ const PickupSignin = () => {
         },
         
       }).then((res)=>{
-        console.log("new");
-        console.log(res.status,res.data);
         const data =res;
-        console.log(typeof data);
-        // console.log("in axios")
 
         if ( !data) {
           window.alert("User Does not Exist");
@@ -54,7 +48,6 @@ const PickupSignin = () => {
       })
     .catch((err) => {
       window.alert("User Does not Exist");
-      // console.log("new2");
       console.error(err);
     });
   };

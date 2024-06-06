@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/signin.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,6 +12,12 @@ const Signin = () => {
     password: "",
   });
 
+  useEffect(()=>{
+    if(localStorage.getItem("token")){
+      navigate("/user/slotbooking")
+    }
+  })
+
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -20,6 +26,7 @@ const Signin = () => {
       [e.target.name]: value,
     });
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

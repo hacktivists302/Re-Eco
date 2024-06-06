@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect  } from "react";
 import "../styles/signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"
@@ -12,7 +12,11 @@ const Signup = () => {
     password: "",
     password2: "",
   });
-
+  useEffect(()=>{
+    if(localStorage.getItem("token")){
+      navigate("/user/slotbooking")
+    }
+  })
   
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,7 +55,6 @@ const Signup = () => {
         }
       }).catch((err) => {
         window.alert("User Does not Exist");
-        // console.log("new2");
         console.error(err);
       });
   };

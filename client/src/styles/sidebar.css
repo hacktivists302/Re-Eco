@@ -13,7 +13,7 @@
     color: white;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    font-family: "poppins", sans-serif;
+    font-family: "Poppins", sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -21,7 +21,6 @@
 }
 
 .sidebar-logo {
-    /* background-color: lightblue; */
     margin-top: 35px;
     margin-bottom: 60px;
     margin-left: 20px;
@@ -30,7 +29,6 @@
 }
 
 .sidebar-logo img {
-    /* background-color: white; */
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -55,6 +53,7 @@
 .sidebar-link i {
     margin-left: 15px;
 }
+
 .home-area,
 .create-area {
     margin-right: 80px;
@@ -78,11 +77,12 @@
     width: 95%;
 }
 
-.MyRewards{
+.MyRewards {
     width: 95%;
     margin-right: 40px;
 }
-.create-area{
+
+.create-area {
     width: 80%;
     margin-right: 50px;
 }
@@ -95,7 +95,7 @@
 .BookSlot,
 .Notifications,
 .MyRewards,
-.create-area{ 
+.create-area {
     transition: all 0.15s;
 }
 
@@ -148,10 +148,10 @@
     }
     
     .show-x-icon {
-        display: none;
+        display: block;
     }
     
     .show-hamburger-icon {
-        display: none;
+        display: block;
     }
 }
