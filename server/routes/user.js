@@ -113,9 +113,9 @@ router.post("/signin", async (req, res, next) => {
   }
 });
 //get user profile
-router.get("/profile/:email",auth, async (req, res) => {
-  const exsistingUser = await user.findOne({ email: req.params.email });
-  const exsistingSlot = await userSlot.findOne({ email: req.params.email });
+router.get("/profile",auth, async (req, res) => {
+  const exsistingUser = await user.findOne({ _id:req.userId });
+  const exsistingSlot = await userSlot.findOne({ email:exsistingUser.email  });
 
   console.log(exsistingUser);
   res.json({
@@ -130,13 +130,12 @@ router.get("/profile/:email",auth, async (req, res) => {
 });
 
 //update user profile
-router.put("/profile/:email", auth, async (req, res) => {
+router.put("/profile", auth, async (req, res) => {
   try {
-    const exsistingUser = await user.findOne({ email: req.params.email });
-    // console.log(exsistingUser)
-    const exsistingSlot = await userSlot.findOne({ email: req.params.email });
+    const exsistingUser = await user.findOne({ _id:req.userId });
+  
+    const exsistingSlot = await userSlot.findOne({ email: exsistingUser.email });
 
-    console.log(exsistingSlot);
     if (exsistingUser) {
       exsistingUser.firstname = req.body.firstname || exsistingUser.firstname;
       exsistingUser.lastname = req.body.lastname || exsistingUser.lastname;
@@ -163,12 +162,11 @@ router.put("/profile/:email", auth, async (req, res) => {
 
 //rewards routes
 //--------when authentication we have to change the rewards routes-----//
-router.get("/rewards/:email", auth, async (req, res, next) => {
+router.get("/rewards", auth, async (req, res, next) => {
   try {
-    const userEmail = req.params.email;
-    console.log(userEmail);
+    const userId = req.userId;
     //finduser
-    const exsistingUser = await user.findOne({ email: userEmail });
+    const exsistingUser = await user.findOne({_id:userId});
     if (!exsistingUser) {
       res.json({
         msg: "no rewards",
