@@ -208,7 +208,7 @@ router.post("/slotbooking", auth, async (req, res, next) => {
       token: newToken,
       otp: mygeneratedOTP,
     });
-
+    
     await user.updateOne(
       {
         email: email,
@@ -220,7 +220,7 @@ router.post("/slotbooking", auth, async (req, res, next) => {
       }
     );
     const fulluser = await user.findOne({ email: email });
-    const token22 = await userSlot.findOne({ _id: fulluser.userSlot });
+    console.log(fulluser)
 
     const notification = await usernotification.create({
       notificationMessage: `Hey ${fulluser.firstname} this is your 6-digit token,Kindly Share this ${newToken} with our Delivery Executive`,
@@ -241,7 +241,7 @@ router.post("/slotbooking", auth, async (req, res, next) => {
     });
   } catch (error) {
     console.error("An error occurred:", error);
-    res.json({msg:"Something is wrong"})
+    res.status(400).json({msg:"Something is wrong"})
   }
 });
 
@@ -275,6 +275,7 @@ router.get("/notifications", auth, async (req, res, next) => {
       notifications: notifications,
     });
   } catch (error) {
+  
     console.error("An error occurred:", error);
     next(error);
   }

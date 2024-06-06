@@ -3,6 +3,7 @@ import "../styles/signin.css";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Url } from "../config";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const Signin = () => {
     };
 
     await axios
-      .post("http://localhost:4000/user/signin", userData, {
+      .post(`${Url}/user/signin`, userData, {
         headers: {
           "Content-type": "application/json",
         },

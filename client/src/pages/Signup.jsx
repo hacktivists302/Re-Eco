@@ -2,6 +2,7 @@ import React, { useState, useEffect  } from "react";
 import "../styles/signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"
+import { Url } from "../config";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const Signup = () => {
         password2:form.password2,
       }
 
-      axios.post("http://localhost:4000/user/signup",userData,{
+      axios.post(`${Url}/user/signup`,userData,{
         headers: {
           "Content-type": "application/json",
         },

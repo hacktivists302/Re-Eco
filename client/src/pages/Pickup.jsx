@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/pickup.css";
 import axios from "axios"
+import { Url } from "../config";
 
 
 const Pickup = () => {
@@ -38,7 +39,7 @@ const Pickup = () => {
         tier:pickDet.tier,
       }
 
-      axios.post("http://localhost:4000/picksignin/pickdetails",userData,{
+      axios.post(`${Url}/picksignin/pickdetails`,userData,{
         headers: {
           "Content-type": "application/json",
         },
