@@ -4,6 +4,7 @@ import { faCircleDot } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Url } from "../config";
 
 const UserNotification = (props) => {
   return (
@@ -31,7 +32,7 @@ const Notifications = () => {
       }
       
      
-      axios.get("http://localhost:4000/user/notifications", {
+      axios.get(`${Url}/user/notifications`, {
           headers: {
             Authorization: "Bearer " +token,
           },

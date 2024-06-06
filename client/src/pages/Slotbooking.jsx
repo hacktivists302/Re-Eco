@@ -1,10 +1,15 @@
 import React, { useEffect } from "react";
 import "../styles/slotbooking.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLessThan, faGreaterThan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLessThan,
+  faGreaterThan,
+  faTriangleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
+import { Url } from "../config";
 
 const Slotbooking = () => {
   const navigate = useNavigate();
@@ -15,11 +20,11 @@ const Slotbooking = () => {
     contact: "",
     date: "Date Selected",
   });
-  useEffect(()=>{
-    if(!localStorage.getItem("token")){
-      navigate("/signup")
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/signup");
     }
-  },[])
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,32 +38,29 @@ const Slotbooking = () => {
   };
 
   const handleSubmit = async (e) => {
- 
     e.preventDefault();
     try {
-      const slotData={
-        email:slotForm.email,
-        address:slotForm.address,
-        pin:slotForm.pin,
-        contact:slotForm.contact,
-        date:slotForm.date,
+      const slotData = {
+        email: slotForm.email,
+        address: slotForm.address,
+        pin: slotForm.pin,
+        contact: slotForm.contact,
+        date: slotForm.date,
+      };
+      const token = localStorage.getItem("token");
+
+      const res = await axios.post(`${Url}/user/slotbooking`, slotData, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      if (res.status === 400) {
+        window.alert("User not Registered");
+      } else {
+        window.alert("Slot Booking Successful");
+        navigate(`/user/notifications`);
       }
-      const token=localStorage.getItem("token");
-
-      axios.post("http://localhost:4000/user/slotbooking",slotData,{
-        headers:{
-          Authorization:"Bearer "+token
-        }
-      }).then((res)=>{
-        const data =res.data;
-
-        if (data.status === 400 || !data) {
-          window.alert("User not Registered");
-        } else {
-          window.alert("Slot Booking Successful");
-          navigate(`/user/notifications`)
-        }
-      })
     } catch (err) {
       console.log(err);
     }
@@ -106,8 +108,8 @@ const Slotbooking = () => {
         return {
           ...prev,
           date: slotPicked,
-        }
-      })
+        };
+      });
     }
   };
 
@@ -128,7 +130,6 @@ const Slotbooking = () => {
     ) {
       alert(`Kindly fill the details correctly first!`);
     } else {
-
     }
   };
 
@@ -232,15 +233,26 @@ const Slotbooking = () => {
   return (
     <>
       <div className="slotbooking-wrapper">
-        <form className="steps-container" action="/user/slotbooking" method="post">
+        <form
+          className="steps-container"
+          action="/user/slotbooking"
+          method="post"
+        >
           <div className="container-1">
             <div action="" className="form-container">
               <div className="step-1">
                 <p className="text">Step 1: User Information</p>
               </div>
-              <div className="input-field-container">
+              <div className="input-field-container tooltip">
                 <label for="email" className="block">
                   Email:
+                  <div className="tooltip">
+                    <FontAwesomeIcon
+                      className="faTriangleExclamation "
+                      icon={faTriangleExclamation}
+                    />
+                    <span class="tooltiptext"> email must be same as login </span>
+                  </div>
                 </label>
                 <input
                   type="text"

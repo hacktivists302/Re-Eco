@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../styles/my-rewards.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Url } from "../config";
 
 const UserReward = (props) => {
   return (
@@ -25,7 +26,7 @@ const MyRewards = () => {
         throw new Error("user does not exsist");
       }
 
-      const response = await axios.get("http://localhost:4000/user/rewards", {
+      const response = await axios.get(`${Url}/user/rewards`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

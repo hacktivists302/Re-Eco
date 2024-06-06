@@ -3,6 +3,7 @@ import { useState } from "react";
 import "../styles/myprofile.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Url } from "../config";
 
 const MyProfile = () => {
   const navigate=useNavigate();
@@ -34,7 +35,7 @@ const MyProfile = () => {
         navigate("/signin")
         throw new Error("user does not exsist")
       }
-     const response=await axios.get("http://localhost:4000/user/profile", {
+     const response=await axios.get(`${Url}/user/profile`, {
         headers: {
           Authorization: "Bearer " + token,
         },

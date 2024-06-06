@@ -3,6 +3,7 @@ import "../styles/pickup-signin.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios"
+import { Url } from "../config";
 
 const PickupSignin = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const PickupSignin = () => {
         password:form.password
       }
 
-      axios.post("http://localhost:4000/picksignin",userData,{
+      axios.post(`${Url}/picksignin`,userData,{
         headers: {
           "Content-type": "application/json",
         },
