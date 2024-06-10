@@ -1,1 +1,1 @@
-export const Url="http://ec2-13-201-13-203.ap-south-1.compute.amazonaws.com:4000"
+export const Url="https://reeco-back-3.onrender.com"
